@@ -18,8 +18,8 @@ public class ChatWebSocket
     @OnOpen
     public void onOpen(Session session)
     {
-        System.out.println("Open connection: "+session.getId());
-        ChatHelper.sessionMap.put(session.getId(),session);
+         System.out.println("Open connection: "+session.getId());
+         ChatHelper.sessionMap.put(session.getId(),session);
     }
 
     @OnClose
@@ -40,6 +40,8 @@ public class ChatWebSocket
             chatHelper.sendMessage(message,session.getId());
         }catch (IOException e)
         {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
