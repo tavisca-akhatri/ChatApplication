@@ -10,8 +10,7 @@ public class ChatHelper
 {
     public static HashMap<String, Session>  sessionMap = new HashMap<>();
 
-    public void sendMessage(String message, String senderId)
-    {
+    public void sendMessage(String message, String senderId) throws InterruptedException {
         Pattern pattern = Pattern.compile("@(.*):(.*)");
         Matcher matcher = pattern.matcher(message);
         if(matcher.find())
@@ -20,10 +19,17 @@ public class ChatHelper
             String messageToSend = matcher.group(2);
             Session receiverSession = sessionMap.get(receiverId);
             try {
-                receiverSession.getBasicRemote().sendText("From "+senderId+" "+messageToSend);
+                while(true)
+                {
+
+                    receiverSession.getBasicRemote().sendText("From "+senderId+" "+messageToSend);
+                }
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            Thread.sleep(1000);
         }
     }
+
 }
